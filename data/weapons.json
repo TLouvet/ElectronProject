@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Fists",
+    "description": "A pair of fists. Good for punching things.",
+    "damage": 3,
+    "value": 0
+  },
+  {
+    "id": 2,
+    "name": "Sword",
+    "description": "A Sword",
+    "damage": 10,
+    "value": 10
+  },
+  {
+    "id": 3,
+    "name": "Axe Of Blood",
+    "description": "A simple axe.",
+    "value": 10,
+    "damage": 10
+  }
+]

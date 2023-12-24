@@ -1,0 +1,14 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  .theader {
+    border: 1px solid black;
+    text-align: left;
+  }
+
+  .tcell {
+    padding: 5px;
+    border: 1px solid black;
+  }
+}
