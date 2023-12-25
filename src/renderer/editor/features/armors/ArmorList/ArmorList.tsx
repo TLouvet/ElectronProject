@@ -2,23 +2,22 @@ import { DeletionModal } from "../../../../component/DeletionModal";
 import { ArmorModal } from "../ArmorModal";
 import { ARMOR_LIST_COLUMNS } from "./armor-list.columns";
 import { Table } from "../../../../component/Table";
-import { useTableControls } from "../../../../component/Table/useTableControls";
-import { IEditorArmor } from "../../../../../engine/editor/features/armor/model/editorArmor.interface";
+import { useCollectionLogic } from "../../../shared/hooks/useCollectionLogic";
+import { TEditorArmor } from "../../../../../engine/editor/features/armor/model/editorArmor.interface";
 
-type WeaponListProps = {
-  armors: Readonly<IEditorArmor[]>;
-};
-
-export function ArmorList({ armors }: WeaponListProps) {
+export function ArmorList() {
   const {
+    items: armors,
     deleteModalOpen,
     editModalOpen,
-    selectedItemId,
+    selectedItemId: currentArmorId,
     onEditModalOpen,
     onEditModalClose,
+    onEditConfirmation,
+    onDeleteConfirmation,
     onDeleteModalOpen,
     onDeleteModalClose,
-  } = useTableControls();
+  } = useCollectionLogic<TEditorArmor>("editorArmors");
 
   return (
     <>
@@ -35,14 +34,15 @@ export function ArmorList({ armors }: WeaponListProps) {
       <button onClick={() => onEditModalOpen(null)}>Add Armor</button>
       <ArmorModal
         open={editModalOpen}
-        onClose={onEditModalClose}
-        id={selectedItemId}
+        onValidation={onEditConfirmation}
+        onCancel={onEditModalClose}
+        id={currentArmorId}
       />
 
       <DeletionModal
         open={deleteModalOpen}
         onCancel={onDeleteModalClose}
-        onConfirm={onDeleteModalClose}
+        onConfirm={() => onDeleteConfirmation(currentArmorId as number)}
       />
     </>
   );

@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { ReadError } from "../../../error/ReadError";
 
-export function readEditorFile<T>(filename: string): T {
+export function readEditorFile<T>(filename: string): T[] {
   try {
     const data = fs.readFileSync(path.join(process.cwd(), "data/", filename), {
       encoding: "utf-8",

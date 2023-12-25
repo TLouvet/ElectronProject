@@ -2,21 +2,22 @@ import { DeletionModal } from "../../../../component/DeletionModal";
 import { WeaponModal } from "../WeaponModal";
 import { WEAPON_LIST_COLUMNS } from "./weapon-list.columns";
 import { Table } from "../../../../component/Table";
-import { useWeaponListLogic } from "./useWeaponListLogic";
+import { useCollectionLogic } from "../../../shared/hooks/useCollectionLogic";
+import { TEditorWeapon } from "../../../../../engine/editor/features/weapon/model/editorWeapon.interface";
 
 export function WeaponList() {
   const {
     editModalOpen,
     deleteModalOpen,
-    weapons,
+    items: weapons,
     selectedItemId: currentWeaponId,
     onDeleteModalClose,
     onDeleteConfirmation,
     onDeleteModalOpen,
     onEditModalOpen,
     onEditModalClose,
-    onItemCreation,
-  } = useWeaponListLogic();
+    onEditConfirmation,
+  } = useCollectionLogic<TEditorWeapon>("editorWeapons");
 
   return (
     <>
@@ -33,7 +34,7 @@ export function WeaponList() {
       <button onClick={() => onEditModalOpen(null)}>Add Weapon</button>
       <WeaponModal
         open={editModalOpen}
-        onValidation={onItemCreation}
+        onValidation={onEditConfirmation}
         onCancel={onEditModalClose}
         id={currentWeaponId}
       />

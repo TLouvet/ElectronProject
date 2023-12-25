@@ -1,14 +1,15 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  color: #adb0b1;
 
   .theader {
-    border: 1px solid black;
+    border: 1px solid #adb0b1;
     text-align: left;
   }
 
   .tcell {
-    padding: 5px;
-    border: 1px solid black;
+    padding: 5px 10px;
+    border: 1px solid #adb0b1;
   }
 }

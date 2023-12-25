@@ -1,12 +1,10 @@
 import React from "react";
 import { Input } from "../../../../component/Input";
 import { useGetArmor } from "../useCases/useGetArmor";
-
-type WeaponModalProps = {
-  open: boolean;
-  onClose: () => void;
-  id: number | null;
-};
+import { ModalProps } from "../../../shared/types/ModalProps.type";
+import { TEditorArmor } from "../../../../../engine/editor/features/armor/model/editorArmor.interface";
+import { ModalCancelButton } from "../../../../component/Modal/ModalCancelButton";
+import { useFindOne } from "../../../shared/hooks/useFindOne";
 
 interface ArmorForm extends HTMLFormElement {
   nom: HTMLInputElement;
@@ -15,30 +13,26 @@ interface ArmorForm extends HTMLFormElement {
   valeur: HTMLInputElement;
 }
 
-export function ArmorModal({ open, onClose, id }: WeaponModalProps) {
-  const armor = useGetArmor(id);
+export function ArmorModal({
+  open,
+  onCancel,
+  onValidation,
+  id,
+}: ModalProps<TEditorArmor>) {
+  const armor = useFindOne<TEditorArmor>("editorArmors", id);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.target as ArmorForm;
-    if (id) {
-      (window as any).editorWeapons.updateArmor({
-        id,
-        name: form.nom.value,
-        description: form.description.value,
-        protection: form.protection.valueAsNumber,
-        value: form.valeur.valueAsNumber,
-      });
-    } else {
-      (window as any).editorWeapons.addArmor({
-        id: id ?? undefined,
-        name: form.nom.value,
-        description: form.description.value,
-        protection: form.protection.valueAsNumber,
-        value: form.valeur.valueAsNumber,
-      });
-    }
-    onClose();
+    const obj = {
+      id: id ?? undefined,
+      name: form.nom.value,
+      description: form.description.value,
+      protection: form.protection.valueAsNumber,
+      value: form.valeur.valueAsNumber,
+    };
+
+    onValidation(obj);
   }
 
   return (
@@ -73,7 +67,7 @@ export function ArmorModal({ open, onClose, id }: WeaponModalProps) {
         />
         <button type='submit'>{id ? "Modifier" : "Ajouter"}</button>
       </form>
-      <button onClick={onClose}>Close</button>
+      <ModalCancelButton onClick={onCancel} />
     </dialog>
   );
 }

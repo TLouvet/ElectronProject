@@ -4,16 +4,12 @@ import { ICreateWeapon } from "../../src/engine/editor/features/weapon/model/cre
 const { contextBridge, ipcRenderer } = require("electron");
 
 export function initContextBridge() {
-  contextBridge.exposeInMainWorld("electronAPI", {
-    sayHello: () => ipcRenderer.invoke("say-hello"),
-  });
-
   contextBridge.exposeInMainWorld("editorWeapons", {
     create: (weapon: ICreateWeapon) => ipcRenderer.invoke("add-weapon", weapon),
     find: () => ipcRenderer.invoke("get-weapons"),
     findOne: (id: number | null) => ipcRenderer.invoke("get-weapon", id),
-    update: (id: number, weapon: ICreateWeapon) =>
-      ipcRenderer.invoke("update-weapon", id, weapon),
+    update: (weapon: ICreateWeapon) =>
+      ipcRenderer.invoke("update-weapon", weapon),
     delete: (id: number) => ipcRenderer.invoke("delete-weapon", id),
   });
 
@@ -21,7 +17,7 @@ export function initContextBridge() {
     create: (armor: ICreateArmor) => ipcRenderer.invoke("add-armor", armor),
     find: () => ipcRenderer.invoke("get-armors"),
     findOne: (id: number | null) => ipcRenderer.invoke("get-armor", id),
-    update: (id: number, armor: ICreateArmor) =>
-      ipcRenderer.invoke("update-armor", id, armor),
+    update: (armor: ICreateArmor) => ipcRenderer.invoke("update-armor", armor),
+    delete: (id: number) => ipcRenderer.invoke("delete-armor", id),
   });
 }

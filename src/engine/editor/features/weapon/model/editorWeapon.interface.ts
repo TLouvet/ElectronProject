@@ -1,7 +1,10 @@
+import { ObjectWithId } from "../../../../../declaration";
+
 export interface IEditorWeapon {
-  id: number;
   name: string;
   description: string;
   value: number;
   damage: number;
 }
+
+export type TEditorWeapon = ObjectWithId<IEditorWeapon>;

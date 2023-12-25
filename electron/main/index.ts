@@ -2,7 +2,7 @@ import { app, BrowserWindow, shell, ipcMain } from "electron";
 import { release } from "node:os";
 import { join } from "node:path";
 import { update } from "./update";
-import { loadEvents } from "./events";
+import { loadEditorEvents } from "./events";
 
 // The built directory structure
 //
@@ -55,7 +55,7 @@ async function createWindow() {
     },
   });
 
-  loadEvents();
+  loadEditorEvents();
 
   if (url) {
     // electron-vite-vue#298

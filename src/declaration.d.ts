@@ -4,22 +4,19 @@ import { ICreateWeapon } from "./engine/editor/features/weapon/model/createWeapo
 import { IEditorWeapon } from "./engine/editor/features/weapon/model/editorWeapon.interface";
 import { IUpdateWeapon } from "./engine/editor/features/weapon/model/updateWeapon.interface";
 
+export type ObjectWithId<T> = T & { id: number };
+
+type IEditorCrudMethods<T> = {
+  create: (item: Partial<T>) => Promise<ObjectWithId<T>>;
+  find: () => Promise<ObjectWithId<T>[]>;
+  findOne: (id: number | null) => Promise<ObjectWithId<T> | null>;
+  update: (item: ObjectWithId<T>) => Promise<ObjectWithId<T>>;
+  delete: (id: number) => Promise<void>;
+};
+
 declare global {
   interface Window {
-    editorArmors: {
-      create: (armor: ICreateArmor) => Promise<void>;
-      find: () => Promise<IEditorArmor[]>;
-      findOne: (id: number | null) => Promise<IEditorArmor | null>;
-      update: (id: number, armor: ICreateArmor) => Promise<void>;
-      delete: (id: number) => Promise<void>;
-    };
-
-    editorWeapons: {
-      create: (weapon: ICreateWeapon) => Promise<IEditorWeapon>;
-      find: () => Promise<IEditorWeapon[]>;
-      findOne: (id: number | null) => Promise<IEditorWeapon | null>;
-      update: (weapon: IUpdateWeapon) => Promise<IEditorWeapon>;
-      delete: (id: number) => Promise<void>;
-    };
+    editorArmors: IEditorCrudMethods<IEditorArmor>;
+    editorWeapons: IEditorCrudMethods<IEditorWeapon>;
   }
 }

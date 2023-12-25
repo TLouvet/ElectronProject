@@ -1,22 +1,14 @@
 import React from "react";
 import { Input } from "../../../../component/Input";
-import { useGetWeapon } from "../useCase/useGetWeapon";
-import { useAddWeapon } from "../useCase/useAddWeapon";
-import { useUpdateWeapon } from "../useCase/useUpdateWeapon";
-import { ICreateWeapon } from "../../../../../engine/editor/features/weapon/model/createWeapon";
-import { IEditorWeapon } from "../../../../../engine/editor/features/weapon/model/editorWeapon.interface";
-
-type WeaponModalProps = {
-  open: boolean;
-  onValidation: (obj: IEditorWeapon) => void;
-  onCancel: () => void;
-  id: number | null;
-};
+import { TEditorWeapon } from "../../../../../engine/editor/features/weapon/model/editorWeapon.interface";
+import { ModalCancelButton } from "../../../../component/Modal/ModalCancelButton";
+import { ModalProps } from "../../../shared/types/ModalProps.type";
+import { useFindOne } from "../../../shared/hooks/useFindOne";
 
 interface WeaponForm extends HTMLFormElement {
   nom: HTMLInputElement;
   description: HTMLTextAreaElement;
-  degats: HTMLInputElement;
+  dmg: HTMLInputElement;
   valeur: HTMLInputElement;
 }
 
@@ -25,11 +17,8 @@ export function WeaponModal({
   onValidation,
   onCancel,
   id,
-}: WeaponModalProps) {
-  const weapon = useGetWeapon(id);
-  const { addWeapon } = useAddWeapon();
-  const { updateWeapon } = useUpdateWeapon();
-  const method = !!id ? updateWeapon : addWeapon;
+}: ModalProps<TEditorWeapon>) {
+  const weapon = useFindOne<TEditorWeapon>("editorWeapons", id);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -38,16 +27,15 @@ export function WeaponModal({
       id: id ?? undefined,
       name: form.nom.value,
       description: form.description.value,
-      damage: form.degats.valueAsNumber,
+      damage: form.dmg.valueAsNumber,
       value: form.valeur.valueAsNumber,
     };
-    const weapon = await method(obj);
 
-    onValidation(weapon);
+    onValidation(obj);
   }
 
   return (
-    <dialog open={open}>
+    <dialog open={open} key={`weap-mod-${weapon?.name ?? "undef"}`}>
       <h2>{id ? "Modifier une arme" : "Ajouter une arme"}</h2>
       <form onSubmit={handleSubmit}>
         <Input
@@ -64,8 +52,8 @@ export function WeaponModal({
         />
         <Input
           label='Degats'
-          id='degats'
-          name='degats'
+          id='dmg'
+          name='dmg'
           type='number'
           defaultValue={weapon ? weapon.damage : ""}
         />
@@ -78,7 +66,7 @@ export function WeaponModal({
         />
         <button type='submit'>{id ? "Modifier" : "Ajouter"}</button>
       </form>
-      <button onClick={onCancel}>Close</button>
+      <ModalCancelButton onClick={onCancel} />
     </dialog>
   );
 }

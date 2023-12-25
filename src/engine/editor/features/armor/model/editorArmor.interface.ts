@@ -1,7 +1,10 @@
+import { ObjectWithId } from "../../../../../declaration";
+
 export interface IEditorArmor {
-  id: number;
   name: string;
   description: string;
   value: number;
   protection: number;
 }
+
+export type TEditorArmor = ObjectWithId<IEditorArmor>;

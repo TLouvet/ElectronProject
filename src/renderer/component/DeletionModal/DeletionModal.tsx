@@ -1,3 +1,5 @@
+import { ModalCancelButton } from "../Modal/ModalCancelButton";
+
 type DeletionModalProps = {
   open: boolean;
   onCancel: () => void;
@@ -14,7 +16,7 @@ export function DeletionModal({
       <h1>Suppression</h1>
       <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
       <button onClick={onConfirm}>Supprimer</button>
-      <button onClick={onCancel}>Annuler</button>
+      <ModalCancelButton onClick={onCancel} />
     </dialog>
   );
 }
