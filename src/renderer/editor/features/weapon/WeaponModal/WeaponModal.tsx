@@ -4,6 +4,8 @@ import { TEditorWeapon } from "../../../../../engine/editor/features/weapon/mode
 import { ModalCancelButton } from "../../../../component/Modal/ModalCancelButton";
 import { ModalProps } from "../../../shared/types/ModalProps.type";
 import { useFindOne } from "../../../shared/hooks/useFindOne";
+import { WEAPON_API_NAME } from "../../../apis";
+import { ModalOverlay } from "../../../../component/Modal/ModalOverlay";
 
 interface WeaponForm extends HTMLFormElement {
   nom: HTMLInputElement;
@@ -18,7 +20,7 @@ export function WeaponModal({
   onCancel,
   id,
 }: ModalProps<TEditorWeapon>) {
-  const weapon = useFindOne<TEditorWeapon>("editorWeapons", id);
+  const weapon = useFindOne<TEditorWeapon>(WEAPON_API_NAME, id);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,8 +37,11 @@ export function WeaponModal({
   }
 
   return (
-    <dialog open={open} key={`weap-mod-${weapon?.name ?? "undef"}`}>
-      <h2>{id ? "Modifier une arme" : "Ajouter une arme"}</h2>
+    <ModalOverlay
+      open={open}
+      title={id ? "Modifier une arme" : "Ajouter une arme"}
+      key={`weap-mod-${weapon?.name ?? "undef"}`}
+    >
       <form onSubmit={handleSubmit}>
         <Input
           label='Nom'
@@ -55,18 +60,20 @@ export function WeaponModal({
           id='dmg'
           name='dmg'
           type='number'
-          defaultValue={weapon ? weapon.damage : ""}
+          min={0}
+          defaultValue={weapon ? weapon.damage : 0}
         />
         <Input
           label='Valeur'
           id='valeur'
           name='valeur'
           type='number'
-          defaultValue={weapon ? weapon.value : ""}
+          min={0}
+          defaultValue={weapon ? weapon.value : 0}
         />
         <button type='submit'>{id ? "Modifier" : "Ajouter"}</button>
       </form>
       <ModalCancelButton onClick={onCancel} />
-    </dialog>
+    </ModalOverlay>
   );
 }

@@ -14,9 +14,11 @@ type IEditorCrudMethods<T> = {
   delete: (id: number) => Promise<void>;
 };
 
+type API = {
+  editorArmors: IEditorCrudMethods<IEditorArmor>;
+  editorWeapons: IEditorCrudMethods<IEditorWeapon>;
+};
+
 declare global {
-  interface Window {
-    editorArmors: IEditorCrudMethods<IEditorArmor>;
-    editorWeapons: IEditorCrudMethods<IEditorWeapon>;
-  }
+  interface Window extends API {}
 }

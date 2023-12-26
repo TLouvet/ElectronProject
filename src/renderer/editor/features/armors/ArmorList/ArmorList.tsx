@@ -4,6 +4,7 @@ import { ARMOR_LIST_COLUMNS } from "./armor-list.columns";
 import { Table } from "../../../../component/Table";
 import { useCollectionLogic } from "../../../shared/hooks/useCollectionLogic";
 import { TEditorArmor } from "../../../../../engine/editor/features/armor/model/editorArmor.interface";
+import { ARMOR_API_NAME } from "../../../apis";
 
 export function ArmorList() {
   const {
@@ -17,7 +18,7 @@ export function ArmorList() {
     onDeleteConfirmation,
     onDeleteModalOpen,
     onDeleteModalClose,
-  } = useCollectionLogic<TEditorArmor>("editorArmors");
+  } = useCollectionLogic<TEditorArmor>(ARMOR_API_NAME);
 
   return (
     <>

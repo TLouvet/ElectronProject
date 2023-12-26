@@ -11,6 +11,10 @@ export function DeletionModal({
   onCancel,
   onConfirm,
 }: DeletionModalProps) {
+  if (!open) {
+    return null;
+  }
+
   return (
     <dialog open={open}>
       <h1>Suppression</h1>

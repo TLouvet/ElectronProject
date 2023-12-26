@@ -17,7 +17,7 @@ export function loadEditorArmorHandlers(COLLECTION_FILE_PATH: string) {
     findOne(id, COLLECTION_FILE_PATH)
   );
 
-  ipcMain.handle("update-armor", (_, id: number, payload: DynamicTableItem) =>
+  ipcMain.handle("update-armor", (_, payload: DynamicTableItem) =>
     updateOne(payload, COLLECTION_FILE_PATH)
   );
 

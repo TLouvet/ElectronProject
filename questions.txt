@@ -1,0 +1,14 @@
+Création personnage :
+
+- Proposer basiques ?
+- Seulement à la création ?
+
+Création des ennemis :
+
+- 1 type à la fois dans l'éditeur
+- Attributs :
+  - Id
+  - Name
+  - Health
+  - Dmg  -> Arme pour les humains ? Si création d'armes type "Griffes", trouver le moyen qu'elles ne soient pas vendables
+  - Protection -> Armure pour les humains ? Si création type "Peau épaisse", ne pas pouvoir vendre l'obj

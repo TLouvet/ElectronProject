@@ -4,6 +4,7 @@ import { WEAPON_LIST_COLUMNS } from "./weapon-list.columns";
 import { Table } from "../../../../component/Table";
 import { useCollectionLogic } from "../../../shared/hooks/useCollectionLogic";
 import { TEditorWeapon } from "../../../../../engine/editor/features/weapon/model/editorWeapon.interface";
+import { WEAPON_API_NAME } from "../../../apis";
 
 export function WeaponList() {
   const {
@@ -17,7 +18,7 @@ export function WeaponList() {
     onEditModalOpen,
     onEditModalClose,
     onEditConfirmation,
-  } = useCollectionLogic<TEditorWeapon>("editorWeapons");
+  } = useCollectionLogic<TEditorWeapon>(WEAPON_API_NAME);
 
   return (
     <>
